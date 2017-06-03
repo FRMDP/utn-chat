@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>Socket.IO chat</title>
+</head>
+<body>
+    <form>
+        <input id="newMessage" autocomplete="off" placeholder="Escriba su mensaje..." />
+        <button id="send">Enviar</button>
+    </form>
+    <ul id="messages"></ul>
+    <script src="/socket.io/socket.io.js"></script>
+    <script type="text/javascript">
+        const socket = io();
+        const newMessage = document.getElementById('newMessage');
+        const send = document.getElementById('send');
+        const messages = document.getElementById('messages');
+
+        function sendMessage(event) {
+            event.preventDefault();
+            socket.emit('chat.message', newMessage.value);
+            newMessage.value = '';
+        }
+
+        function receiveMessage(msg) {
+            const li = document.createElement("li");
+            li.appendChild(document.createTextNode(msg));
+            messages.appendChild(li);
+        }
+
+        socket.on('chat.message', receiveMessage);
+        send.addEventListener('click', sendMessage);
+    </script>
+</body>
+</html>
