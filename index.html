@@ -6,6 +6,7 @@
 </head>
 <body>
     <form>
+        <input id='userName' type='text' placeholder='Pone tu nick'/>
         <input id="newMessage" autocomplete="off" placeholder="Escriba su mensaje..." />
         <button id="send">Enviar</button>
     </form>
@@ -14,18 +15,25 @@
     <script type="text/javascript">
         const socket = io();
         const newMessage = document.getElementById('newMessage');
+        const userName = document.getElementById('userName');
         const send = document.getElementById('send');
         const messages = document.getElementById('messages');
 
+
         function sendMessage(event) {
             event.preventDefault();
-            socket.emit('chat.message', newMessage.value);
+
+            const payload = {
+              userNameP : userName.value,
+              newMessageP : newMessage.value
+            }
+            socket.emit('chat.message', payload);
             newMessage.value = '';
         }
 
         function receiveMessage(msg) {
             const li = document.createElement("li");
-            li.appendChild(document.createTextNode(msg));
+            li.appendChild(document.createTextNode(msg.username+': '+msg.msj));
             messages.appendChild(li);
         }
 
