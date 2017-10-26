@@ -3,29 +3,54 @@
 <head>
     <meta charset="utf-8">
     <title>Socket.IO chat</title>
+    <link rel="stylesheet" type="text/css" href="estilo.css">
+    <link rel="stylesheet" type="text/css" href="materialize.css">
+    <link rel="stylesheet" type="text/css" href="materialize.min.css">
 </head>
 <body>
-    <form>
-        <input id="newMessage" autocomplete="off" placeholder="Escriba su mensaje..." />
-        <button id="send">Enviar</button>
-    </form>
-    <ul id="messages"></ul>
+    <div class="container">
+        <div>
+            <h2>Chat increible</h2>
+            <h6 id="showUser"></h6>
+            <div class="chatbox"> 
+                <ul id="messages"></ul>
+            </div>
+            <form class="align-bottom">
+                <input id='userName' type='text' placeholder='Pone tu nick'/>
+                <input id="newMessage" autocomplete="off" placeholder="Escriba su mensaje..." />
+                <button class="btn pad" id="send">Enviar</button>
+            </form>
+        </div>
+    </div>
     <script src="/socket.io/socket.io.js"></script>
-    <script type="text/javascript">
+    <script type="text/javascript">   
+
         const socket = io();
         const newMessage = document.getElementById('newMessage');
+        const userName = document.getElementById('userName');
         const send = document.getElementById('send');
         const messages = document.getElementById('messages');
-
+        const showUser = document.getElementById('showUser');
+        
         function sendMessage(event) {
             event.preventDefault();
-            socket.emit('chat.message', newMessage.value);
+            const payload = {
+              userNameP : userName.value,
+              newMessageP : newMessage.value
+            }
+            socket.emit('chat.message', payload);
             newMessage.value = '';
+            showUser.innerHTML = 'Vos sos ' + userName.value;
+            //let userPorqueria = document.createElement("label");
+            //userPorqueria.innerHTML = userName.value;
         }
 
         function receiveMessage(msg) {
-            const li = document.createElement("li");
-            li.appendChild(document.createTextNode(msg));
+            let li = document.createElement("li");
+            let div = document.createElement("div");
+            div.className = ("chip");
+            div.innerHTML = '<i><b>' + msg.username + ':</i></b> ' + msg.msj;
+            li.appendChild(div);
             messages.appendChild(li);
         }
 
