@@ -24,8 +24,8 @@
             event.preventDefault();
 
             const payload = {
-              userNameP : userName.value,
-              newMessageP : newMessage.value
+              username : userName.value,
+              msj : newMessage.value
             }
             socket.emit('chat.message', payload);
             newMessage.value = '';

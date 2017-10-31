@@ -9,10 +9,7 @@ app.get('/', (req, res) => {
 
 io.on('connection', (socket) => {
 	socket.on('chat.message', (payload) => {
-		io.emit('chat.message', {
-      username: payload.userNameP,
-      msj: payload.newMessageP
-    });
+		io.emit('chat.message', payload);
 	});
 });
 
