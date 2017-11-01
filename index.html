@@ -10,7 +10,7 @@
 <body>
     <div class="container">
         <div>
-            <h2>Chat increible</h2>
+            <h2><i>Chat increible</i></h2>
             <h6 id="showUser"></h6>
             <div class="chatbox"> 
                 <ul id="messages"></ul>
@@ -35,14 +35,12 @@
         function sendMessage(event) {
             event.preventDefault();
             const payload = {
-              userNameP : userName.value,
-              newMessageP : newMessage.value
+              username : userName.value,
+              msj : newMessage.value
             }
             socket.emit('chat.message', payload);
             newMessage.value = '';
-            showUser.innerHTML = 'Vos sos ' + userName.value;
-            //let userPorqueria = document.createElement("label");
-            //userPorqueria.innerHTML = userName.value;
+            showUser.innerHTML = 'Vos sos <b>' + userName.value +'</b>';
         }
 
         function receiveMessage(msg) {
