@@ -8,6 +8,7 @@
     <link rel="stylesheet" type="text/css" href="materialize.min.css">
 </head>
 <body>
+  
     <div class="container">
         <div>
             <h2><i>Chat increible</i></h2>
@@ -22,6 +23,7 @@
             </form>
         </div>
     </div>
+
     <script src="/socket.io/socket.io.js"></script>
     <script type="text/javascript">   
 
@@ -34,6 +36,7 @@
         
         function sendMessage(event) {
             event.preventDefault();
+
             const payload = {
               username : userName.value,
               msj : newMessage.value
